@@ -46,7 +46,7 @@ export const Footer = () => {
                 {/* Account Section */}
                 <Stack rowGap={'1rem'} padding={'1rem'}>
                     <Typography variant='h6'>Account</Typography>
-                    <Typography sx={labelStyles} onClick={() => handleNavigate('/account')}>My Account</Typography>
+                    <Typography sx={labelStyles} onClick={() => handleNavigate('/profile')}>My Account</Typography>
                     <Typography sx={labelStyles} onClick={() => handleNavigate('/login')}>Login / Register</Typography>
                     <Typography sx={labelStyles} onClick={() => handleNavigate('/cart')}>Cart</Typography>
                     <Typography sx={labelStyles} onClick={() => handleNavigate('/wishlist')}>Wishlist</Typography>

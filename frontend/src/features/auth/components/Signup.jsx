@@ -103,6 +103,22 @@ export const Signup = () => {
                         <TextField type='password' fullWidth {...register("confirmPassword",{required:"Confirm Password is required",validate:(value,fromValues)=>value===fromValues.password || "Passwords doesn't match"})} placeholder='Confirm Password'/>
                         {errors.confirmPassword && <FormHelperText error>{errors.confirmPassword.message}</FormHelperText>}
                       </motion.div>
+
+                      <motion.div>
+                        <TextField 
+                          fullWidth 
+                          {...register("mobile", {
+                            required: "Mobile number is required",
+                            pattern: {
+                              value: /^[0-9]{10}$/,
+                              message: "Please enter a valid 10-digit mobile number"
+                            }
+                          })} 
+                          placeholder='Mobile Number'
+                          type="tel"
+                        />
+                        {errors.mobile && <FormHelperText error>{errors.mobile.message}</FormHelperText>}
+                      </motion.div>
                     
                     </MotionConfig>
 

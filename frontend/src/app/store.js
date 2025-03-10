@@ -9,6 +9,7 @@ import AddressSlice from '../features/address/AddressSlice'
 import ReviewSlice from '../features/review/ReviewSlice'
 import WishlistSlice from '../features/wishlist/WishlistSlice'
 import orderReducer from '../features/order/OrderSlice';
+import returnReducer from '../features/returns/ReturnSlice';
 
 export const store=configureStore({
     reducer:{
@@ -21,6 +22,7 @@ export const store=configureStore({
         AddressSlice,
         ReviewSlice,
         WishlistSlice,
-        orderSlice: orderReducer
+        orderSlice: orderReducer,
+        return: returnReducer
     }
 })

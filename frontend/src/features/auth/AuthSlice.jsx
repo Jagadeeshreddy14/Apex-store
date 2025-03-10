@@ -1,5 +1,16 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import { checkAuth, forgotPassword, login, logout, resendOtp, resetPassword, signup, verifyOtp } from './AuthApi'
+import { 
+    checkAuth, 
+    forgotPassword, 
+    login, 
+    logout, 
+    resendOtp, 
+    resetPassword, 
+    signup, 
+    verifyOtp,
+    sendMobileOtp,    // Add this
+    verifyMobileOtp   // Add this
+} from './AuthApi'
 
 const initialState={
     status:"idle",
@@ -21,7 +32,9 @@ const initialState={
     resetPasswordSuccessMessage:null,
     resetPasswordError:null,
     successMessage:null,
-    isAuthChecked:false
+    isAuthChecked:false,
+    mobileVerificationStatus: 'idle',
+    mobileVerificationError: null
 }
 
 export const signupAsync=createAsyncThunk('auth/signupAsync',async(cred)=>{
@@ -62,6 +75,21 @@ export const logoutAsync=createAsyncThunk("auth/logoutAsync",async()=>{
     return res
 })
 
+export const sendMobileOtpAsync = createAsyncThunk(
+  'auth/sendMobileOtp',
+  async (mobile) => {
+    const response = await sendMobileOtp(mobile);
+    return response;
+  }
+);
+
+export const verifyMobileOtpAsync = createAsyncThunk(
+  'auth/verifyMobileOtp',
+  async (data) => {
+    const response = await verifyMobileOtp(data);
+    return response;
+  }
+);
 
 const authSlice=createSlice({
     name:"authSlice",
@@ -223,7 +251,16 @@ const authSlice=createSlice({
                 state.errors=action.error
                 state.isAuthChecked=true
             })
-            
+            .addCase(sendMobileOtpAsync.pending, (state) => {
+                state.mobileVerificationStatus = 'pending';
+            })
+            .addCase(sendMobileOtpAsync.fulfilled, (state) => {
+                state.mobileVerificationStatus = 'fulfilled';
+            })
+            .addCase(verifyMobileOtpAsync.fulfilled, (state, action) => {
+                state.loggedInUser = action.payload;
+                state.mobileVerificationStatus = 'fulfilled';
+            });
     }
 })
 

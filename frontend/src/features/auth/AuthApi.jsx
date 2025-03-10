@@ -84,3 +84,22 @@ export const logout = async () => {
         throw handleError(error);
     }
 };
+
+// Add to AuthApi.jsx
+export const sendMobileOtp = async (mobile) => {
+    try {
+        const res = await axiosi.post("auth/send-mobile-otp", { mobile });
+        return res.data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};
+
+export const verifyMobileOtp = async (data) => {
+    try {
+        const res = await axiosi.post("auth/verify-mobile-otp", data);
+        return res.data;
+    } catch (error) {
+        throw handleError(error);
+    }
+};

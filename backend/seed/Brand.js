@@ -1,8 +1,8 @@
 const Brand = require("../models/Brand");
 
 const brands = [
-  { _id: "65a7e20102e12c44f59943da", name: "Apple" },
-  { _id: "65a7e20102e12c44f59943db", name: "Samsung" },
+  { _id: "65a7e20102e12c44f59943da", name: "Handmade " },
+  { _id: "65a7e20102e12c44f59943db", name: "Samsun" },
   { _id: "65a7e20102e12c44f59943dc", name: "OPPO" },
   { _id: "65a7e20102e12c44f59943dd", name: "Huawei" },
   { _id: "65a7e20102e12c44f59943de", name: "Microsoft Surface" },

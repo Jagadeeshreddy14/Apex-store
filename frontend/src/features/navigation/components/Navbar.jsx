@@ -28,6 +28,9 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import TuneIcon from '@mui/icons-material/Tune';
 import { selectProductIsFilterOpen, toggleFilters } from '../../products/ProductSlice';
 import SearchIcon from '@mui/icons-material/Search';
+import { ThemeToggle } from '../../../components/ThemeToggle';
+import { LanguageSelector } from '../../../components/LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 export const Navbar = ({ isProductList = false }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -43,6 +46,7 @@ export const Navbar = ({ isProductList = false }) => {
   const is480 = useMediaQuery(theme.breakpoints.down(480));
   const wishlistItems = useSelector(selectWishlistItems);
   const isProductFilterOpen = useSelector(selectProductIsFilterOpen);
+  const { t } = useTranslation();
 
   // List of example product names for the placeholder animation
   const exampleProducts = [
@@ -417,6 +421,10 @@ export const Navbar = ({ isProductList = false }) => {
               />
             </IconButton>
           )}
+        </Stack>
+        <Stack direction="row" spacing={2} alignItems="center">
+          <ThemeToggle />
+          <LanguageSelector />
         </Stack>
       </Toolbar>
     </AppBar>

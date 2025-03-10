@@ -3,6 +3,8 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const Product = require('../models/Product');
+const { sendMail } = require('../utils/Emails');
+const { orderConfirmationEmail, orderStatusEmail } = require('../utils/emailTemplates');
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -44,6 +46,13 @@ exports.create = async (req, res) => {
         path: 'item.product',
         populate: { path: 'brand' }
       });
+
+    // Send order confirmation email
+    await sendMail(
+      populatedOrder.user.email,
+      'Order Confirmation - Apex Store',
+      orderConfirmationEmail(populatedOrder, populatedOrder.user)
+    );
 
     res.status(201).json(populatedOrder);
   } catch (error) {
@@ -140,6 +149,21 @@ exports.updateById=async(req,res)=>{
     try {
         const {id}=req.params
         const updated=await Order.findByIdAndUpdate(id,req.body,{new:true})
+          .populate('user')
+          .populate({
+            path: 'item.product',
+            populate: { path: 'brand' }
+          });
+
+        // Send status update email if status changed to Delivered
+        if (req.body.status === 'Delivered' || req.body.status === 'Out for delivery') {
+          await sendMail(
+            updated.user.email,
+            'Order Status Update - Apex Store',
+            orderStatusEmail(updated, updated.user)
+          );
+        }
+
         res.status(200).json(updated)
     } catch (error) {
         console.log(error);
